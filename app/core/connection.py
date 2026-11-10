@@ -32,11 +32,19 @@ class Connection:
         self.port_of_attacker = port_of_attacker
         self.max_failed_attempts = max_failed_attempts
         self.attempts = []
-        self.is_active = True
+        self._is_active = True
         self.end_time = None
 
+    @property
+    def is_active(self):
+        return self._is_active
+
+    @is_active.setter
+    def is_active(self, value):
+        raise AttributeError('modifying the is_active attribute is not allowed')
+
     def add_attempt(self, attempt: Attempt):
-        if not self.is_active:
+        if not self._is_active:
             print(f"Conn {self.id}. Connection terminated")
             return
         self.attempts.append(attempt)
@@ -47,9 +55,53 @@ class Connection:
         return len(self.attempts)
 
     def disconnect(self):
-        if self.is_active:
-            self.is_active = False
+        if self._is_active:
+            self._is_active = False
             self.end_time = datetime.now()
             print(
                 f"Conn {self.id} Connection to {self.address_of_attacker} terminated after {self.get_attempt_count()} attempts."
             )
+
+conn1 = Connection(
+    id="First_Conn",
+    start_time="10:26",
+    lure_name="ssh_lure",
+    lure_type="low_interaction",
+    address_of_attacker="192.168.1.50",
+    port_of_attacker=22,
+    max_failed_attempts=5,
+)
+
+conn2 = Connection(
+    id="Second_Conn",
+    start_time="10:27",
+    lure_name="ssh_lure",
+    lure_type="low_interaction",
+    address_of_attacker="10.0.0.5",
+    port_of_attacker=22,
+)
+
+
+conn3 = Connection(
+    id="Third_Conn",
+    start_time="10:28",
+    lure_name="ssh_lure",
+    lure_type="low_interaction",
+    address_of_attacker="11.32.14.5",
+    port_of_attacker=22,
+)
+
+real_attempt = Attempt(
+    time_of_attempt="10:26", username="admin", password="Password123"
+)
+
+try:
+    conn1.is_active = True
+except AttributeError as error:
+    print(error)
+conn2.add_attempt(real_attempt)
+conn2.add_attempt(real_attempt)
+conn2.add_attempt(real_attempt)
+conn2.add_attempt(real_attempt)
+print(conn2.get_attempt_count())
+print(f"{conn1.id}: {conn1.get_attempt_count()}, {conn1.MAX_FAILED_ATTEMPTS}, {conn1.max_failed_attempts}")
