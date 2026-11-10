@@ -41,7 +41,7 @@ class Connection:
 
     @is_active.setter
     def is_active(self, value):
-        raise AttributeError('modifying the is_active attribute is not allowed')
+        raise AttributeError("modifying the is_active attribute is not allowed")
 
     def add_attempt(self, attempt: Attempt):
         if not self._is_active:
@@ -61,6 +61,7 @@ class Connection:
             print(
                 f"Conn {self.id} Connection to {self.address_of_attacker} terminated after {self.get_attempt_count()} attempts."
             )
+
 
 conn1 = Connection(
     id="First_Conn",
@@ -104,4 +105,6 @@ conn2.add_attempt(real_attempt)
 conn2.add_attempt(real_attempt)
 conn2.add_attempt(real_attempt)
 print(conn2.get_attempt_count())
-print(f"{conn1.id}: {conn1.get_attempt_count()}, {conn1.MAX_FAILED_ATTEMPTS}, {conn1.max_failed_attempts}")
+print(
+    f"{conn1.id}: {conn1.get_attempt_count()}, {conn1.MAX_FAILED_ATTEMPTS}, {conn1.max_failed_attempts}"
+)
