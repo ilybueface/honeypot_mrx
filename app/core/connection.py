@@ -34,6 +34,7 @@ class Connection:
         self.attempts = []
         self._is_active = True
         self.end_time = None
+        self.pending_username = None
 
     @property
     def is_active(self):
@@ -61,3 +62,13 @@ class Connection:
             print(
                 f"Conn {self.id} Connection to {self.address_of_attacker} terminated after {self.get_attempt_count()} attempts."
             )
+
+conn1 = Connection(
+    id="First_Conn",
+    start_time="10:26",
+    lure_name="ssh_lure",
+    lure_type="low_interaction",
+    address_of_attacker="192.168.1.50",
+    port_of_attacker=22,
+    max_failed_attempts=5,
+)

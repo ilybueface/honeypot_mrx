@@ -3,20 +3,21 @@ from base import UniterService
 
 
 class FtpService(UniterService):
-    def __init__(self):
-        pass
+    def handle_login(self, connection: Connection, username: str):
+        connection.pending_username = username
 
+    def handle_password(self, connection: Connection, password: str):
+        if connection.pending_username is None:
+            return
+        self.process_auth_request(connection, connection.pending_username, password)
+        connection.pending_username = None
 
 conn1 = Connection(
     id="First_Conn",
     start_time="10:26",
-    lure_name="fpt_lure",
+    lure_name="ftp_lure",
     lure_type="low_interaction",
     address_of_attacker="192.168.1.50",
-    port_of_attacker=22,
+    port_of_attacker=21,
     max_failed_attempts=5,
 )
-
-c = FtpService()
-auf = c.process_auth_request(conn1, "t23e2", "32e33e")
-print(f"Quantity of attempts in connection: {len(conn1.attempts)}")

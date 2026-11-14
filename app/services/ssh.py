@@ -3,9 +3,7 @@ from base import UniterService
 
 
 class SshService(UniterService):
-    def __init__(self):
-        pass
-
+    pass
 
 conn1 = Connection(
     id="First_Conn",
@@ -16,7 +14,3 @@ conn1 = Connection(
     port_of_attacker=22,
     max_failed_attempts=5,
 )
-
-c = SshService()
-auf = c.process_auth_request(conn1, "t23e2", "32e33e")
-print(f"Количество попыток в подключении: {len(conn1.attempts)}")
