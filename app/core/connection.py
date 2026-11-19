@@ -63,6 +63,7 @@ class Connection:
                 f"Conn {self.id} Connection to {self.address_of_attacker} terminated after {self.get_attempt_count()} attempts."
             )
 
+
 conn1 = Connection(
     id="First_Conn",
     start_time="10:26",

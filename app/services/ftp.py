@@ -12,6 +12,19 @@ class FtpService(UniterService):
         self.process_auth_request(connection, connection.pending_username, password)
         connection.pending_username = None
 
+    def handle_data(self, connection: Connection, data: str):
+        parts = data.split(maxsplit=1)
+
+        if len(parts) != 2:
+            return
+
+        command, argument = parts
+        if command == "USER":
+            self.handle_login(connection, argument)
+        elif command == "PASS":
+            self.handle_password(connection, argument)
+
+
 conn1 = Connection(
     id="First_Conn",
     start_time="10:26",
