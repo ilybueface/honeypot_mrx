@@ -3,8 +3,6 @@ from app.services.base import UniterService
 
 
 class SSHService(UniterService):
-    pass
-
     def handle_data(self, connection: Connection, data: str):
         parts = data.split(maxsplit=1)
 

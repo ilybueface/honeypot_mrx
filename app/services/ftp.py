@@ -32,7 +32,7 @@ if __name__ == "__main__":
         lure_name="ftp_lure",
         lure_type="low_interaction",
         address_of_attacker="192.168.1.50",
-        port_of_attacker=22,
+        port_of_attacker=21,
         max_failed_attempts=5,
     )
     c = FTPService()
