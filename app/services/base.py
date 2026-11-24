@@ -1,8 +1,9 @@
-from app.core.connection import Attempt, Connection
+from app.core.connection import Attempt
+from abc import ABC, abstractmethod
 from datetime import datetime
 
 
-class UniterService:
+class UniterService(ABC):
     def __init__(self):
         pass
 
@@ -11,3 +12,7 @@ class UniterService:
             time_of_attempt=datetime.now(), username=login, password=password
         )
         connection.add_attempt(attempt)
+
+    @abstractmethod
+    def handle_data(self):
+        pass

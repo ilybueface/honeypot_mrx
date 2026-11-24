@@ -1,8 +1,8 @@
 from app.core.connection import Connection
-from base import UniterService
+from app.services.base import UniterService
 
 
-class FtpService(UniterService):
+class FTPService(UniterService):
     def handle_login(self, connection: Connection, username: str):
         connection.pending_username = username
 
@@ -25,12 +25,16 @@ class FtpService(UniterService):
             self.handle_password(connection, argument)
 
 
-conn1 = Connection(
-    id="First_Conn",
-    start_time="10:26",
-    lure_name="ftp_lure",
-    lure_type="low_interaction",
-    address_of_attacker="192.168.1.50",
-    port_of_attacker=21,
-    max_failed_attempts=5,
-)
+if __name__ == "__main__":
+    conn1 = Connection(
+        id="First_Conn",
+        start_time="10:26",
+        lure_name="ftp_lure",
+        lure_type="low_interaction",
+        address_of_attacker="192.168.1.50",
+        port_of_attacker=22,
+        max_failed_attempts=5,
+    )
+    c = FTPService()
+    c.handle_data(conn1, "mrx")
+    c.handle_data(conn1, "mrx tunder1234")
