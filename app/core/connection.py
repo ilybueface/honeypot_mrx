@@ -1,6 +1,8 @@
 from datetime import datetime, timezone
 import uuid
 
+uid = uuid.uuid4()
+uid.hex
 
 class Attempt:
     def __init__(self, username, password, time_of_attempt):
