@@ -1,8 +1,6 @@
 from datetime import datetime, timezone
 import uuid
 
-uid = uuid.uuid4()
-uid.hex
 
 class Attempt:
     def __init__(self, username, password, time_of_attempt):
@@ -19,16 +17,14 @@ class Connection:
 
     def __init__(
         self,
-        id,
-        start_time,
         lure_name,
         lure_type,
         address_of_attacker,
         port_of_attacker,
         max_failed_attempts: int = MAX_FAILED_ATTEMPTS,
     ):
-        self.id = id
-        self.start_time = start_time
+        self.id = uuid.uuid4().hex
+        self.start_time = datetime.now(timezone.utc)
         self.lure_name = lure_name
         self.lure_type = lure_type
         self.address_of_attacker = address_of_attacker
@@ -61,18 +57,24 @@ class Connection:
     def disconnect(self):
         if self._is_active:
             self._is_active = False
-            self.end_time = datetime.now()
+            self.end_time = datetime.now(timezone.utc)
             print(
                 f"Conn {self.id} Connection to {self.address_of_attacker} terminated after {self.get_attempt_count()} attempts."
             )
 
 
 conn1 = Connection(
-    id="First_Conn",
-    start_time="10:26",
     lure_name="ssh_lure",
     lure_type="low_interaction",
     address_of_attacker="192.168.1.50",
     port_of_attacker=22,
+    max_failed_attempts=5,
+)
+
+conn2 = Connection(
+    lure_name="ftp_lure",
+    lure_type="low_interaction",
+    address_of_attacker="192.168.1.49",
+    port_of_attacker=21,
     max_failed_attempts=5,
 )
