@@ -1,2 +1,4 @@
 black
 uuid
+mypy
+pytest
